@@ -16,6 +16,7 @@ def get_response(prompt, context = []):
     port = 9101
     api_route = 'coe_query'
     post_params = {'query': prompt,
+                   'context': context,
                 }
     res = requests.post(f'http://127.0.0.1:{port}/{api_route}', json = post_params)
     execution_time = time.time() - start_time
@@ -34,7 +35,7 @@ def reset(df):
     return df.reset_index()[cols]
 
 show_chat_history_no = 5
-admin_list = ['thanatcc', 'da', 'chinnawd']
+admin_list = ['thanatcc', 'da', 'chinnawd', 'nontawic',]
 da_username_list = ['thanatcc','chinnawd','anaky','bodinc','kawinwil','palakorb','peranutn','pitiyatp','senangma','skunpojt','supachas','wasakory','kriangks','nontawic','bodinc','chalisak','wanpracc','suwatchc','bovonvij']
 
 st.set_page_config(page_title = 'COE', page_icon = 'fav.png', layout="wide")
@@ -252,7 +253,7 @@ if st.session_state["authentication_status"]:
                     engine = response_dict['engine']
                     frontend_query_time = response_dict['frontend_query_time']
                     backend_query_time = response_dict['backend_query_time']
-                                        
+
                 full_response = ""
                 # Simulate streaming the response with a slight delay
                 for chunk in response.split("\n"):
