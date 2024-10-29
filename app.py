@@ -27,12 +27,15 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-def get_response(prompt, context = []):
+def get_response(prompt, context = [], params):
     start_time = time.time()
     port = 9101
     api_route = 'coe_query'
     post_params = {'query': prompt,
                    'context': context,
+                   'temperature': params['temperature'],
+                   'max_document': params['max_document'],
+                   'output_length': params['output_length'],
                 }
     res = requests.post(f'http://127.0.0.1:{port}/{api_route}', json = post_params)
     execution_time = time.time() - start_time
@@ -78,13 +81,16 @@ if st.session_state["authentication_status"]:
     user_image = Image.open('fav_2.png')
 
     with st.sidebar:
-        
         clear_session_click = st.button("New Chat")
         if clear_session_click:
             st.session_state.messages = []
             st.session_state.context = []
             now = str(datetime.datetime.now())
             st.session_state.chat_id  = now
+        
+        temperature = st.slider("Creativity Level: 0.0 (Precise) → 1.0 (Creative)", 0.0, 1.0, 1.0, 0.05)
+        max_document = st.slider("Max Document:", min_value = 1, max_value = 10, value = 5, step = 1)
+        output_length = st.slider("Output Length:", min_value = 250, max_value = 1500, value = 500, step = 250)
 
         context_radio = st.radio(
             "Context:",
@@ -265,7 +271,11 @@ if st.session_state["authentication_status"]:
 
             with st.spinner('Thinking...'):
                 if context_radio == 'COE':
-                    response_dict = get_response(prompt, context = st.session_state.context)
+                    response_dict = get_response(prompt, context = st.session_state.messages, params = {
+                        'temperature': temperature,
+                        'max_document': max_document,
+                        'output_length': output_length,
+                    })
                     temp_dict = response_dict['response']
                     raw_input = response_dict['raw_input']
                     raw_output = response_dict['raw_output']
