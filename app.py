@@ -194,7 +194,7 @@ if st.session_state["authentication_status"]:
                         original_text = temp_citation_dict[i][0]
                         file_name = temp_citation_dict[i][1]
                         url = f"https://pc140032646.bot.or.th/th_pdf/{file_name.replace(' ','%20')}"
-                        st.info(f"{original_text} [{file_name}]({url})")
+                        st.info(f"[{file_name}]({url}) {original_text}")
 
                 # col1, col2, col3 = st.columns(3)
                 # with col1:
