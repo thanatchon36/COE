@@ -27,7 +27,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-def get_response(prompt, context = [], params):
+def get_response(prompt, params, context = []):
     start_time = time.time()
     port = 9101
     api_route = 'coe_query'
@@ -271,11 +271,13 @@ if st.session_state["authentication_status"]:
 
             with st.spinner('Thinking...'):
                 if context_radio == 'COE':
-                    response_dict = get_response(prompt, context = st.session_state.messages, params = {
-                        'temperature': temperature,
-                        'max_document': max_document,
-                        'output_length': output_length,
-                    })
+                    response_dict = get_response(prompt,
+                        params = {
+                            'temperature': temperature,
+                            'max_document': max_document,
+                            'output_length': output_length,
+                        },
+                        context = st.session_state.messages)
                     temp_dict = response_dict['response']
                     raw_input = response_dict['raw_input']
                     raw_output = response_dict['raw_output']
