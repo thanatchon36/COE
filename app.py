@@ -90,7 +90,7 @@ if st.session_state["authentication_status"]:
         
         temperature = st.slider("Creativity Level: 0.0 (Precise) → 1.0 (Creative)", 0.0, 1.0, 1.0, 0.05)
         max_document = st.slider("Max Document:", min_value = 1, max_value = 10, value = 5, step = 1)
-        output_length = st.slider("Output Length:", min_value = 100, max_value = 1000, value = 100, step = 100)
+        output_length = st.slider("Output Length (word):", min_value = 100, max_value = 1000, value = 100, step = 100)
 
         context_radio = st.radio(
             "Context:",
