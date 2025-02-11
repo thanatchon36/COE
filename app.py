@@ -363,7 +363,7 @@ if st.session_state["authentication_status"]:
                     displayed_response = ""
 
                     # Stream the response word by word
-                    for word in split_including_newlines(full_response):
+                    for word in [each + '\n' for each in full_response.split('\n')]:
                         displayed_response += word + " "
                         # Display the current state of the response
                         message_placeholder.markdown(displayed_response)
