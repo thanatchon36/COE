@@ -317,23 +317,17 @@ if st.session_state["authentication_status"]:
                     # message_placeholder.markdown(full_response)
 
                     full_response = response
-                    
+
                     # Create a placeholder
                     message_placeholder = st.empty()
+                    full_response = ""
 
-                    # Initialize an empty string to store the displayed response
-                    displayed_response = ""
-
-                    # Stream the response word by word
-                    for word in full_response.split():
-                        displayed_response += word + " "
-                        # Display the current state of the response
-                        message_placeholder.markdown(displayed_response)
-                        # Add a small delay to create the streaming effect
-                        time.sleep(0.1)
-
-                    # Ensure the final response is displayed completely
-                    message_placeholder.markdown(full_response)
+                    # Stream the response
+                    for chunk in full_response.split():  # Your API response stream
+                        if '\n' in chunk:
+                            chunk = chunk.replace('\n', '\\n')  # Convert \n to literal "\\n"
+                        full_response += chunk
+                        message_placeholder.markdown(full_response)
 
             csv_file = f"data/{st.session_state.username}.csv"
             file_exists = os.path.isfile(csv_file)
