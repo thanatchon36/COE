@@ -326,7 +326,7 @@ if st.session_state["authentication_status"]:
                             full_response += word + " "
                             # When we reach the end of a line
                             if word == words[-1]:
-                                full_response = full_response.rstrip() + "  \n" # Two spaces and newline for markdown line break
+                                full_response = full_response.rstrip() + "  \n\n" # Two spaces and newline for markdown line break
                             message_placeholder.markdown(full_response)
 
             csv_file = f"data/{st.session_state.username}.csv"
