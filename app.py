@@ -27,6 +27,44 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+def split_including_newlines(text):
+    """
+    Splits a string into a list of words, including newline characters 
+    as separate elements.  This differs from the standard str.split() 
+    which treats newlines as whitespace delimiters.
+
+    Args:
+        text: The input string.
+
+    Returns:
+        A list of strings, where each element is a word or a newline character.
+        Returns an empty list if the input string is empty or None.
+    """
+
+    if not text:  # Handle empty or None input
+        return []
+
+    result = []
+    current_word = ""
+
+    for char in text:
+        if char == '\n':
+            if current_word:  # Add the current word if it's not empty
+                result.append(current_word)
+            result.append('\n')  # Add the newline character
+            current_word = ""  # Reset for the next word
+        elif char.isspace() and char != '\n': # Handle other whitespace
+            if current_word:
+                result.append(current_word)
+            current_word = ""
+        else:
+            current_word += char
+
+    if current_word:  # Add the last word if any
+        result.append(current_word)
+
+    return result
+
 def get_response(prompt, params, context = []):
     start_time = time.time()
     port = 9101
@@ -317,17 +355,23 @@ if st.session_state["authentication_status"]:
                     # message_placeholder.markdown(full_response)
 
                     full_response = response
-
+                    
                     # Create a placeholder
                     message_placeholder = st.empty()
-                    full_response = ""
 
-                    # Stream the response
-                    for chunk in full_response.split():  # Your API response stream
-                        if '\n' in chunk:
-                            chunk = chunk.replace('\n', '\\n')  # Convert \n to literal "\\n"
-                        full_response += chunk
-                        message_placeholder.markdown(full_response)
+                    # Initialize an empty string to store the displayed response
+                    displayed_response = ""
+
+                    # Stream the response word by word
+                    for word in split_including_newlines(full_response):
+                        displayed_response += word + " "
+                        # Display the current state of the response
+                        message_placeholder.markdown(displayed_response)
+                        # Add a small delay to create the streaming effect
+                        time.sleep(0.1)
+
+                    # Ensure the final response is displayed completely
+                    message_placeholder.markdown(full_response)
 
             csv_file = f"data/{st.session_state.username}.csv"
             file_exists = os.path.isfile(csv_file)
