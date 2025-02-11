@@ -370,6 +370,7 @@ if st.session_state["authentication_status"]:
                         # Add a small delay to create the streaming effect
                         time.sleep(0.1)
 
+                    full_response = displayed_response
                     # Ensure the final response is displayed completely
                     message_placeholder.markdown(full_response)
 
