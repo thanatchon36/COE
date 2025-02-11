@@ -314,19 +314,46 @@ if st.session_state["authentication_status"]:
                         # Update the cumulative count for the next iteration
                         cumulative_count += len(each['source_paragraphs'])
 
-                    full_response = ""
-                    chunks = response.split(":\n")
+                    # full_response = ""
+                    # chunks = response.split("\n")
                     
-                    for i, chunk in enumerate(chunks):
-                        words = chunk.split(" ")
-                        for word in words:
+                    # for i, chunk in enumerate(chunks):
+                    #     words = chunk.split(" ")
+                    #     for word in words:
+                    #         time.sleep(0.01)
+                    #         # Add cursor animation
+                    #         message_placeholder.markdown(full_response + "▌")
+                    #         full_response += word + " "
+                    #         # When we reach the end of a line
+                    #         if word == words[-1]:
+                    #             full_response = full_response.rstrip() + "  \n" # Two spaces and newline for markdown line break
+                    #         message_placeholder.markdown(full_response)
+
+                    full_response = ""
+                    lines = response.split("\n")
+                    cursor ="▌"
+                    line_ending = " \n"
+                    
+                    for line_idx, line in enumerate(lines):
+                        words = line.strip().split()
+                        
+                        for word_idx, word in enumerate(words):
+                            # Show cursor animation
+                            message_placeholder.markdown(full_response + cursor)
                             time.sleep(0.01)
-                            # Add cursor animation
-                            message_placeholder.markdown(full_response + "▌")
-                            full_response += word + " "
-                            # When we reach the end of a line
-                            if word == words[-1]:
-                                full_response = full_response.rstrip() + "  \n\n" # Two spaces and newline for markdown line break
+                            
+                            # Add word and space
+                            full_response += word
+                            
+                            # Add space if not last word in line
+                            if word_idx < len(words) - 1:
+                                full_response += " "
+                            
+                            # Add line ending if last word in line
+                            if word_idx == len(words) - 1:
+                                full_response += line_ending if line_idx < len(lines) - 1 else ""
+                                
+                            # Update display
                             message_placeholder.markdown(full_response)
 
             csv_file = f"data/{st.session_state.username}.csv"
