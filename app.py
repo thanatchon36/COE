@@ -315,7 +315,7 @@ if st.session_state["authentication_status"]:
                         cumulative_count += len(each['source_paragraphs'])
 
                     full_response = ""
-                    chunks = response.split("\n")
+                    chunks = response.split("\n\n")
                     
                     for i, chunk in enumerate(chunks):
                         words = chunk.split(" ")
