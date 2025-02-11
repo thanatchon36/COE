@@ -348,32 +348,10 @@ if st.session_state["authentication_status"]:
                             citation_dict[each_j] = [source_paragraph, file_name]
                         # Update the cumulative count for the next iteration
                         cumulative_count += len(each['source_paragraphs'])
-
-                    # full_response = ""  # Initialize an empty string to store the full response
-                    # message_placeholder = st.empty()  # Create an empty placeholder for displaying messages
-                    # full_response = response
-                    # message_placeholder.markdown(full_response)
-
-                    full_response = response
-                    
+                        
                     # Create a placeholder
+                    full_response = response
                     message_placeholder = st.empty()
-
-                    # # Initialize an empty string to store the displayed response
-                    # displayed_response = ""
-
-                    # # Stream the response word by word
-                    # for word in [each + '\n' for each in full_response.split('\n')]:
-                    #     displayed_response += word + " "
-                    #     # Display the current state of the response
-                    #     message_placeholder.markdown(displayed_response)
-                    #     # Add a small delay to create the streaming effect
-                    #     time.sleep(0.1)
-
-                    # full_response = displayed_response
-                    # Ensure the final response is displayed completely
-                    # st.markdown(full_response)
-
                     displayed_response = ""
                     # Split the response into lines and add Markdown line breaks
                     for line in full_response.split('\n'):
