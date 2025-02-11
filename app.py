@@ -356,7 +356,8 @@ if st.session_state["authentication_status"]:
                     #         # Update display
                     #         message_placeholder.markdown(full_response)
 
-                    st.markdown(response)
+                    full_response = response
+                    message_placeholder.markdown(full_response)
 
             csv_file = f"data/{st.session_state.username}.csv"
             file_exists = os.path.isfile(csv_file)
