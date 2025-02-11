@@ -372,7 +372,7 @@ if st.session_state["authentication_status"]:
 
                     # full_response = displayed_response
                     # Ensure the final response is displayed completely
-                    message_placeholder.markdown(full_response)
+                    st.markdown(full_response)
 
             csv_file = f"data/{st.session_state.username}.csv"
             file_exists = os.path.isfile(csv_file)
