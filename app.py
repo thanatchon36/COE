@@ -359,18 +359,18 @@ if st.session_state["authentication_status"]:
                     # Create a placeholder
                     message_placeholder = st.empty()
 
-                    # Initialize an empty string to store the displayed response
-                    displayed_response = ""
+                    # # Initialize an empty string to store the displayed response
+                    # displayed_response = ""
 
-                    # Stream the response word by word
-                    for word in [each + '\n' for each in full_response.split('\n')]:
-                        displayed_response += word + " "
-                        # Display the current state of the response
-                        message_placeholder.markdown(displayed_response)
-                        # Add a small delay to create the streaming effect
-                        time.sleep(0.1)
+                    # # Stream the response word by word
+                    # for word in [each + '\n' for each in full_response.split('\n')]:
+                    #     displayed_response += word + " "
+                    #     # Display the current state of the response
+                    #     message_placeholder.markdown(displayed_response)
+                    #     # Add a small delay to create the streaming effect
+                    #     time.sleep(0.1)
 
-                    full_response = displayed_response
+                    # full_response = displayed_response
                     # Ensure the final response is displayed completely
                     message_placeholder.markdown(full_response)
 
