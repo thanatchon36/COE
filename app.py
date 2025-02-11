@@ -372,7 +372,20 @@ if st.session_state["authentication_status"]:
 
                     # full_response = displayed_response
                     # Ensure the final response is displayed completely
-                    st.markdown(full_response)
+                    # st.markdown(full_response)
+
+                    displayed_response = ""
+                    # Split the response into lines and add Markdown line breaks
+                    for line in full_response.split('\n'):
+                        # Append each line with two spaces and a newline for proper Markdown formatting
+                        displayed_response += line + '  \n'
+                        # Update the display incrementally
+                        message_placeholder.markdown(displayed_response)
+                        time.sleep(0.1)
+
+                    # Final update to ensure all content is displayed
+                    message_placeholder.markdown(displayed_response)
+                    full_response = displayed_response
 
             csv_file = f"data/{st.session_state.username}.csv"
             file_exists = os.path.isfile(csv_file)
